@@ -121,6 +121,7 @@ const deletePending = function(event) {
         paintToDo(item);
     });
 
+    saveTodayToDos();
     HandlerMovieViewerH2();
 };
 
@@ -140,7 +141,7 @@ const deleteFinished = function(event) {
         finishedFlag = true;
         paintFinished(item);
     });
-
+    saveTodayToDos();
     HandlerMovieViewerH2();
 };
 
@@ -186,6 +187,8 @@ function handlerModal_form(event) {
     } else {
         alert("네? 아무 것도 입력 안했어요..😥");
     }
+
+    saveTodayToDos();
 }
 
 //한 일 -> 할 일
@@ -214,8 +217,10 @@ const movePending = function(event) {
         toDosFlag = true;
         paintToDo(item);
     });
+    saveTodayToDos();
 };
 
+//할 일 -> 한 일 이동
 const moveFinished = function(event) {
     const btn = event.target;
     const li = btn.parentNode;
@@ -241,17 +246,18 @@ const moveFinished = function(event) {
         finishedFlag = true;
         paintFinished(finish);
     });
+    saveTodayToDos();
 };
 
 //toDo 그리기
 const paintToDo = function(toDos) {
     const li = document.createElement("li");
-    const xBtn = document.createElement("span");
-    const fBtn = document.createElement("span");
+    const xBtn = document.createElement("btn");
+    const fBtn = document.createElement("btn");
     const { text, id } = toDos;
 
     if (toDosFlag) {} else {
-        TODOS_ARRAY.concat(toDos);
+        TODOS_ARRAY.push(toDos);
         toDosFlag = false;
     }
 
@@ -303,26 +309,48 @@ const paintFinished = function(item) {
     fBtn.addEventListener("click", moveFinished);
 };
 
-//처음 로드
-const loadedToDos = function() {
-    const toDos = localStorage.getItem(TODOS);
-    const finished = localStorage.getItem(FINISHED);
+//오늘 날짜에 맞는 TODOS와 FINISHED를 불러옴
+const checkToday = function() {
+    let toDos;
+    let finished;
 
+    let day = new Date().getDate();
+    let month = new Date().getMonth() + 1;
+    let year = new Date().getFullYear();
+
+    const returnObj = CALENDER_ARRAY.find(function(item) {
+        return item.year === year && item.month === month && item.day === day;
+    });
+
+    console.log(returnObj);
+
+    if (returnObj) {
+        toDos = returnObj.TODOS_ARRAY;
+        finished = returnObj.FINISHED_ARRAY;
+    }
+
+    loadedToDos(toDos, finished);
+};
+
+//처음 todos와 finished를 그림!
+const loadedToDos = function(toDos, finished) {
+    console.log(toDos, finished);
     if (toDos) {
-        const parseToDos = JSON.parse(toDos);
-        parseToDos.forEach(function(item) {
+        toDos.forEach(function(item) {
             paintToDo(item);
         });
     }
 
     if (finished) {
-        const parseFinished = JSON.parse(finished);
-        parseFinished.forEach(function(item) {
+        finished.forEach(function(item) {
             paintFinished(item);
         });
     }
+    saveToDos();
+    saveFinished();
 };
 
+//바로 입력 모달 뜨는 거 방지
 function checkIsToDo() {
     const pendingLi = document.querySelectorAll(".pending li");
     const finishedLi = document.querySelectorAll(".finished li");
@@ -343,8 +371,8 @@ function checkIsToDo() {
 
 //초기화 함수
 function init() {
-    loadedToDos();
-    // checkIsToDo();
+    checkToday();
+    checkIsToDo();
     modalCloseBtn.addEventListener("click", handlerModalClose);
     writeBtn.addEventListener("click", handlerWriteBtn);
     modal_form.addEventListener("submit", handlerModal_form);
