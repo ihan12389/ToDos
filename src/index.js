@@ -9,6 +9,9 @@ const movieViewer_video = document.querySelector(".movieViewer_video");
 const modalCloseBtn = modal.querySelector(".close");
 const writeBtn = document.querySelector(".write");
 const modalVideo = modal.querySelector(".modalViewer_video");
+const wrap = document.querySelector(".wrap");
+const container = document.querySelector(".container");
+const title = document.querySelector(".title");
 let modal_input = modal.querySelector(".modal_input");
 
 const TODOS = "TODOS";

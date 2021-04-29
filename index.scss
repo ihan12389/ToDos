@@ -1,15 +1,24 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: inherit;
     // border: 0.5px solid pink;
 }
 
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+//기본 요소 설정
 a {
     text-decoration: none;
     color: inherit;
 }
 
 h1 {
+    // display: none;
     font-size: 7em;
     margin-bottom: 80px;
     margin-top: -80px;
@@ -24,6 +33,7 @@ ol {
     list-style: none;
 }
 
+//추가 설정(modal content)
 .outline {
     outline: 1px solid white;
 }
@@ -46,6 +56,14 @@ ol {
 
 .pos_rel {
     position: relative;
+}
+
+//추가 설정(calendar)
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both; //양쪽 비워
+    float: none;
 }
 
 html,
@@ -78,6 +96,7 @@ body {
     }
     .modal {
         display: flex;
+        // display: none;
         justify-content: center;
         align-items: center;
         flex-direction: column;
@@ -87,7 +106,6 @@ body {
         left: 0;
         right: 0;
         background-color: #1d1f20;
-        // display: none;
         .close {
             position: absolute;
             top: 50px;
@@ -150,6 +168,7 @@ body {
     }
     .wrap {
         display: flex;
+        // display: none;
         flex-direction: column;
         align-items: center;
         .write {
@@ -240,6 +259,148 @@ body {
                     display: none;
                 }
             }
+        }
+        .openCld {
+            position: absolute;
+            bottom: 50px;
+            right: 100px;
+            background: rgba(245, 115, 82, 0.8);
+            padding: 15px 30px;
+            border: 2px solid #fff;
+            border-radius: 50px;
+            transition-timing-function: cubic-bezier(0.31 -0.105 0.13 1.59);
+            box-shadow: 3px 3px 12px 1px rgba(255, 255, 255, 0.45);
+            cursor: pointer;
+            span {
+                transition: all 0.35s 0.35s;
+                transition-timing-function: cubic-bezier(0.31 -0.105 0.43 1.59);
+                transform: scale();
+                display: inline-block;
+                font-family: "Saira Stencil One", cursive;
+                font-weight: normal;
+            }
+            &:hover span {
+                transform: scale(1.2);
+            }
+        }
+    }
+    .container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #00000069;
+        .my-calendar {
+            width: 700px;
+            margin: 30px;
+            padding: 20px 20px 10px;
+            text-align: center;
+            font-weight: 800;
+            border: 1px solid #ddd;
+            cursor: default;
+            .clicked-date {
+                border-radius: 25px;
+                margin-top: 36px;
+                float: left;
+                width: 42%;
+                padding: 46px 0 26px;
+                background: #ddd;
+                .cal-day {
+                    font-size: 24px;
+                }
+                .cal-date {
+                    font-size: 130px;
+                }
+            }
+            .calendar-box {
+                float: right;
+                width: 58%;
+                // padding-left: 30px;
+                .ctr-box {
+                    padding: 0 16px;
+                    margin-bottom: 20px;
+                    font-size: 20px;
+                    .btn-cal {
+                        color: white;
+                        position: relative;
+                        float: left;
+                        width: 25px;
+                        height: 25px;
+                        margin-top: 5px;
+                        font-size: 1.5em;
+                        cursor: pointer;
+                        border: none;
+                        background: none;
+                        &:after {
+                            content: '<';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            line-height: 25px;
+                            font-weight: bold;
+                            // font-size: 20px;
+                        }
+                        &.next {
+                            float: right;
+                            &:after {
+                                content: ">";
+                            }
+                        }
+                    }
+                }
+                .cal-table {
+                    width: 100%;
+                    th {
+                        width: 14.2857%;
+                        padding-bottom: 5px;
+                        font-size: 16px;
+                        font-weight: 900;
+                    }
+                    td {
+                        padding: 3px 0;
+                        height: 50px;
+                        font-size: 15px;
+                        vertical-align: middle;
+                        &.day {
+                            position: relative;
+                            cursor: pointer;
+                        }
+                        &.today {
+                            background: #ffd255;
+                            border-radius: 50%;
+                            color: #fff;
+                        }
+                        &.day-active {
+                            background: #ff8585;
+                            border-radius: 50%;
+                            color: #fff;
+                        }
+                        &.has-event:after {
+                            content: "";
+                            display: block;
+                            position: absolute;
+                            left: 0;
+                            bottom: 0;
+                            width: 100%;
+                            height: 4px;
+                            background: #FFC107;
+                        }
+                    }
+                }
+            }
+        }
+        .closeCld {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            font-size: 2em;
+            z-index: 10;
         }
     }
 }

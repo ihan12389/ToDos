@@ -1,4 +1,5 @@
-const saveTodayBtn = document.querySelector(".saveTodayBtn");
+const openCld = document.querySelector(".openCld");
+const closeCld = document.querySelector(".closeCld");
 
 const CALENDER = "CALENDAR";
 let CALENDER_ARRAY = [];
@@ -49,10 +50,22 @@ const loadedCalender = function() {
     }
 };
 
+const openCalendar = function() {
+    wrap.classList.add("dp_none");
+    title.classList.add("dp_none");
+    container.classList.remove("dp_none");
+};
+const closeCalendar = function() {
+    container.classList.add("dp_none");
+    wrap.classList.remove("dp_none");
+    title.classList.remove("dp_none");
+};
+
 //처음 실행하는 함수
 function init() {
     loadedCalender();
-    saveTodayBtn.addEventListener("click", saveTodayToDos);
+    openCld.addEventListener("click", openCalendar);
+    closeCld.addEventListener("click", closeCalendar);
 }
 
 init();
