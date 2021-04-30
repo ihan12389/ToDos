@@ -292,7 +292,8 @@ body .wrap .content_wrap .toDoList .finished {
   margin-top: 20px;
 }
 
-body .wrap .content_wrap .toDoList .pending_li {
+body .wrap .content_wrap .toDoList .pending_li,
+body .wrap .content_wrap .toDoList .finished_li {
   margin: 10px 0 10px 1em;
 }
 

@@ -1,21 +1,25 @@
-const pending = document.querySelector(".pending");
-const finished = document.querySelector(".finished");
 const modal = document.querySelector(".modal");
 const modal_form = modal.querySelector(".modal_form");
-const player1 = document.querySelector("#player1");
+const modalCloseBtn = modal.querySelector(".close");
+const modalVideo = modal.querySelector(".modalViewer_video");
+let modal_input = modal.querySelector(".modal_input");
 const movieViewerH2 = document.querySelector(".movieViewer h2");
 const movieViewer_default = document.querySelector(".movieViewer_default");
 const movieViewer_video = document.querySelector(".movieViewer_video");
-const modalCloseBtn = modal.querySelector(".close");
+const pending = document.querySelector(".pending");
+const finished = document.querySelector(".finished");
+const player1 = document.querySelector("#player1");
 const writeBtn = document.querySelector(".write");
-const modalVideo = modal.querySelector(".modalViewer_video");
 const wrap = document.querySelector(".wrap");
 const container = document.querySelector(".container");
 const title = document.querySelector(".title");
-let modal_input = modal.querySelector(".modal_input");
 
 const TODOS = "TODOS";
 const FINISHED = "FINISHED";
+
+let day;
+let month;
+let year;
 
 let TODOS_ARRAY = [];
 let FINISHED_ARRAY = [];
@@ -312,20 +316,38 @@ const paintFinished = function(item) {
     fBtn.addEventListener("click", moveFinished);
 };
 
+//처음 todos와 finished를 그림!
+const loadedToDos = function(toDos, finished) {
+    if (toDos) {
+        toDos.forEach(function(item) {
+            toDosFlag = false;
+            paintToDo(item);
+        });
+    }
+
+    if (finished) {
+        finished.forEach(function(item) {
+            finishedFlag = false;
+            paintFinished(item);
+        });
+    }
+
+    saveToDos();
+    saveFinished();
+};
+
 //오늘 날짜에 맞는 TODOS와 FINISHED를 불러옴
 const checkToday = function() {
     let toDos;
     let finished;
 
-    let day = new Date().getDate();
-    let month = new Date().getMonth() + 1;
-    let year = new Date().getFullYear();
+    day = new Date().getDate();
+    month = new Date().getMonth() + 1;
+    year = new Date().getFullYear();
 
     const returnObj = CALENDER_ARRAY.find(function(item) {
         return item.year === year && item.month === month && item.day === day;
     });
-
-    console.log(returnObj);
 
     if (returnObj) {
         toDos = returnObj.TODOS_ARRAY;
@@ -333,24 +355,6 @@ const checkToday = function() {
     }
 
     loadedToDos(toDos, finished);
-};
-
-//처음 todos와 finished를 그림!
-const loadedToDos = function(toDos, finished) {
-    console.log(toDos, finished);
-    if (toDos) {
-        toDos.forEach(function(item) {
-            paintToDo(item);
-        });
-    }
-
-    if (finished) {
-        finished.forEach(function(item) {
-            paintFinished(item);
-        });
-    }
-    saveToDos();
-    saveFinished();
 };
 
 //바로 입력 모달 뜨는 거 방지
@@ -370,6 +374,12 @@ function checkIsToDo() {
             "*"
         );
     }
+}
+
+function changeDay(inputYear, inputMonth, inputDay) {
+    day = inputDay;
+    month = inputMonth;
+    year = inputYear;
 }
 
 //초기화 함수

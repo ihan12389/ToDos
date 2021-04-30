@@ -61,6 +61,9 @@ const initi = {
     },
 };
 
+let ready_month;
+let ready_year;
+
 //필요 객체 소환
 const $calBody = document.querySelector(".cal-body");
 const $btnNext = document.querySelector(".btn-cal.next");
@@ -76,10 +79,11 @@ function loadDate(date, dayIn) {
 function loadYYMM(fullDate) {
     let yy = fullDate.getFullYear();
     let mm = fullDate.getMonth();
+    ready_year = yy;
+    ready_month = mm;
     let firstDay = initi.getFirstDay(yy, mm);
     let lastDay = initi.getLastDay(yy, mm);
     let markToday; // for marking today date
-
     if (mm === initi.today.getMonth() && yy === initi.today.getFullYear()) {
         markToday = initi.today.getDate();
     }
@@ -135,6 +139,29 @@ function loadYYMM(fullDate) {
 //     $todoList.appendChild(createLi(id, val, date));
 // }
 
+//클릭한 날짜의 정보 표시
+const reloadTodo = function() {
+    resetPendingLi();
+    resetFinishedLi();
+
+    let toDos;
+    let finished;
+
+    TODOS_ARRAY = [];
+    FINISHED_ARRAY = [];
+
+    const returnObj = CALENDER_ARRAY.find(function(item) {
+        return item.year === year && item.month === month && item.day === day;
+    });
+
+    if (returnObj) {
+        toDos = returnObj.TODOS_ARRAY;
+        finished = returnObj.FINISHED_ARRAY;
+    }
+
+    loadedToDos(toDos, finished);
+};
+
 //오늘의 달력을 그리고
 loadYYMM(initi.today);
 //오늘의 날짜를 출력해!
@@ -155,6 +182,7 @@ $calBody.addEventListener("click", (e) => {
         }
         //현재 클릭한 날짜를 받고
         let day = Number(e.target.textContent);
+        changeDay(ready_year, ready_month + 1, day);
         //클릭한 날짜로 일, 요일 출력
         loadDate(day, e.target.cellIndex);
         //그리고 지금 클릭한 걸 활성화 시켜!

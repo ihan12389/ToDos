@@ -11,7 +11,6 @@ const findDay = function(day, month, year) {
         return item.day === day && item.month === month && item.year === year;
     });
     idx = CALENDER_ARRAY.indexOf(returnObj);
-    console.log(idx);
     return idx;
 };
 
@@ -22,15 +21,7 @@ const saveTodayListWithDate = function(dayObj) {
 
 //CALENDER 갱신 + 로컬에 저장
 const saveTodayToDos = function() {
-    console.log(TODOS_ARRAY);
-
-    let day = new Date().getDate();
-    let month = new Date().getMonth() + 1;
-    let year = new Date().getFullYear();
-    console.log(`${day} | ${month} | ${year}`);
-
     let dayObj = { year, month, day, TODOS_ARRAY, FINISHED_ARRAY };
-
     let idx = findDay(day, month, year);
 
     if (idx !== -1) {
