@@ -15,9 +15,11 @@ https://im-developer.tistory.com/115
 ---
 
 구현한 것
-<ol><strong>날짜 별로 toDoList 불러오기<strong></ol>
+<ol><strong>날짜 별로 toDoList 불러오기</ol>
 <ol>캘린더 통해서 toDoList 조작하기</ol>
 <ol>무작위 배경</ol>
-
+</strong>
 <br><br>
-끝입니다
+끝입니다<br>
+--><br>
+https://ihan12389.github.io/toDos/
