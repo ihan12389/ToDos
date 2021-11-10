@@ -2,10 +2,6 @@
 Lihano make ToDos page for studying
 <br><br>
 취업 활동을 위해 만든 일정 관리 웹입니다.<br>
-일단 디자인과 기능은 아래의 사이트를 참조해서 만들었습니다.
-<br><br>
-https://codesandbox.io/s/just-do-it-5o0sh<br>
-https://im-developer.tistory.com/115
 <br>
 <br>
 단순한 toDo List보다는 더 나아가고 싶어서 캘린더 기능도 합쳐서 일정 관리가 가능하도록 했습니다.<br>
